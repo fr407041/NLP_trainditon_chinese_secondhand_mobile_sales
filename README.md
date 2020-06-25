@@ -56,4 +56,4 @@
 
 ### 結論
 
-* 二手賣價其實是由市場機制決定，雖然對相同品項每個人賣價不盡相同，但在市場機制下勢必會收斂到某區間範圍內，本次實驗目的主要在於證明，當資料夠多時，我們是能藉由NLP憑販賣文章內容有著不錯的估計賣價貼近市場機制，後續有時間會再逐漸Release Source Code及Model。
+* 二手賣價其實是由市場機制決定，雖然對相同品項每個人賣價不盡相同，但在市場機制下勢必會收斂到某區間範圍內，本次實驗目的主要在於證明，當資料夠多時，我們是能藉由NLP憑販賣文章內容有著不錯的估計賣價貼近市場機制，後續有時間會再逐漸Release Source Code及Model，不過筆者也將所使用資料Share供有興趣者研究(在Data Folder有兩份，第一份為[big5_secondhand_mobile_sales.zip](/data/big5_secondhand_mobile_sales.zip)供Window電腦使用，第二份為[secondhand_mobile_sales.zip](secondhand_mobile_sales.zip)供Linux電腦使用)。
