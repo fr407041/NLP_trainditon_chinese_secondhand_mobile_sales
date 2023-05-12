@@ -34,7 +34,7 @@
 
 ### Estimating Price Accuracy
 
-*  The author originally used LSTM to estimate prices, but the average error (|actual selling price - estimated selling price|) was around 1500. After a long tuning process using the BERT model, the error has been reduced to around 1000.
+*  I originally used LSTM to estimate prices, but the average error (|actual selling price - estimated selling price|) was around 1500. After a long tuning process using the BERT model, the error has been reduced to around 1000.
 
 *  The first image below shows the error status, where the number of test samples (497) differs from the 478 valid samples in the provided data. This is because some of the 19 missing samples had data format errors or contained sensitive information that was removed.
 
