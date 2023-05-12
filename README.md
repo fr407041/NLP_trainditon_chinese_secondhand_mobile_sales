@@ -1,20 +1,21 @@
-# 針對賣二手手機販賣文章內容估計對應賣價
+# Estimating Secondhand Mobile Phone Selling Price based on Sales Listing Content
 ### Index
 
-* [Data格式介紹](#Data格式介紹)
-* [估計價格準確度](#估計價格準確度)
-* [結論](#結論)
+* [Introduction to Data Format](#Data格式介紹)
+* [Estimating Price Accuracy](#估計價格準確度)
+* [Conclusion](#結論)
 ----
 
 <a name="Data格式介紹"/>
 
-### Data格式介紹
+### Introduction to Data Format
 
 ![](/pic/data_format.png)
 
-1. Article Date : 文章發布日期
-1. Article Title : 文章標題 (`內容通常是欲販賣物品品牌及規格`)
-1. Article : 文章內容，原始內容`大部分`涵蓋底下(當然也有只有部分的文章)，這裡已經前處理過將欲售價格拿掉 (`欲售價格就是底下的Sell Price`)
+1. Article Date: Date when the article was published
+1. Article Title: Title of the article (usually includes the brand and specifications of the item for sale)
+1. Article: Content of the article, which typically includes the following (although some articles may only have partial content). The sell price has been removed through preprocessing (Sell Price is mentioned below).
+
 ```
 欲售物品：
 物品狀況：全新/二手
@@ -31,29 +32,25 @@
 
 <a name="估計價格準確度"/>
 
-### 估計價格準確度
+### Estimating Price Accuracy
 
-*  筆者原先是使用LSTM來預估，但誤差( `|實際賣價 - 預估賣價 |` )的平均值大概在1500左右，改用BERT Model經過長時間的調校，誤差已從1500降至1000上下
-*  底下第一張圖為誤差Status
+*  The author originally used LSTM to estimate prices, but the average error (|actual selling price - estimated selling price|) was around 1500. After a long tuning process using the BERT model, the error has been reduced to around 1000.
 
-   > 1. 這裡Test Sample數497與我給資料中Valid只有478筆不同，原因是因為少的19筆裡面有些資料格式謬誤及含一些我認為敏感資訊所以拿掉 
-   > 2. 紫色線為Error P05/P95的位置
-   > 3. 下圖左邊Trend的X軸為實際賣價，Y軸為`|實際賣價 - 預估賣價 |`，可發現誤差隨著實際賣價越高，誤差也就越大，而且預估賣價常大於實際賣價 (`紅色水平線以下`)
-   > 4. 下圖右邊Density Plot為Error機率分布，大致上呈現鐘形分布，Error = 786.27為Mean Absolute Error(MAE)
+*  The first image below shows the error status, where the number of test samples (497) differs from the 478 valid samples in the provided data. This is because some of the 19 missing samples had data format errors or contained sensitive information that was removed.
+
+   > 1. The purple line represents the location of Error P05/P95, and the left side of the trend chart shows the actual selling price on the X-axis and the |actual selling price - estimated selling price| on the Y-axis. It can be observed that the error increases as the actual selling price increases, and the estimated selling price is often greater than the actual selling price (below the red horizontal line).
+   > 2. On the right side of the trend chart, the density plot shows the probability distribution of errors, which roughly follows a bell curve. The Error = 786.27 represents the Mean Absolute Error (MAE).
 
 ![](/pic/Error_Status.png)
 
-*  底下第二張圖為`實際賣價`與`預估賣價` Correlation Status
+*  The second graph displays the correlation status of actual and predicted selling prices. The first graph presents the trend of actual and predicted selling prices over time. In the second scatter plot, the x-axis represents the actual selling price, and the y-axis represents the predicted selling price. It can be observed that the prediction error is smaller for prices below 10,000 dollars and increases as the price surpasses that threshold. Additionally, the predicted selling prices are often higher than the actual prices, as seen in the red dots located left of the diagonal line.
 
-   > 第一張Trend X軸為發表文章時間 (`應該吧??`)，黑色線為實際賣價，紅色線為預估賣價
-   > 第二張Scatter Plot X軸為實際賣價，Y軸為預估賣價，可發現實際賣價1萬元以下，誤差較小，超過1萬元以上，誤差逐漸變大且預估多數大於實際(紅色對角線左邊)
-   
 ![](/pic/Corr_Status.png)
 
 ----
 
 <a name="結論"/>
 
-### 結論
+### Conclusion
 
-* 二手賣價其實是由市場機制決定，雖然對相同品項每個人賣價不盡相同，但在市場機制下勢必會收斂到某區間範圍內，本次實驗目的主要在於證明，當資料夠多時，我們是能藉由NLP憑販賣文章內容有著不錯的估計賣價貼近市場機制，後續有時間會再逐漸Release Source Code及Model，不過筆者也將所使用資料Share供有興趣者研究(在Data Folder有兩份，第一份為[big5_secondhand_mobile_sales.zip](/data/big5_secondhand_mobile_sales.zip)供Window電腦使用，第二份為[secondhand_mobile_sales.zip](secondhand_mobile_sales.zip)供Linux電腦使用)。
+* The second-hand selling price is determined by the market mechanism. Although the selling price for the same item may vary among individuals, it will inevitably converge to a certain range under the market mechanism. The purpose of this experiment is to demonstrate that with enough data, we can use NLP to estimate the selling price based on the content of the selling article and get close to the market mechanism. We will gradually release the source code and model later, and the author will also share the data used in the experiment for those who are interested in researching (there are two files in the Data Folder, the first one is [big5_secondhand_mobile_sales.zip](/data/big5_secondhand_mobile_sales.zip) for Windows computers, and the second one is [secondhand_mobile_sales.zip](secondhand_mobile_sales.zip) for Linux computers).
