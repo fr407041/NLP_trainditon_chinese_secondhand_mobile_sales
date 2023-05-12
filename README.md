@@ -26,7 +26,7 @@
 購入價格：
 欲售價格：       
 ```
-1. Sell Price : 即原本Article中的`欲售價格`
+* Sell Price: Refers to the `欲售價格` mentioned in the original article.
 
 ----
 
